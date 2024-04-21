@@ -1,7 +1,10 @@
 package com.spring.Ecommerce.Services;
 
 import com.spring.Ecommerce.DTO.CreateUserDTO;
+import com.spring.Ecommerce.Model.Batch;
+import com.spring.Ecommerce.Model.Instructor;
 import com.spring.Ecommerce.Model.User;
+import com.spring.Ecommerce.Repository.InstructorRepository;
 import com.spring.Ecommerce.Repository.UserRepository;
 import lombok.Data;
 import lombok.Getter;
@@ -17,11 +20,14 @@ import java.util.List;
 public class UserServices {
 
     private final UserRepository userdetails;
-
-    public UserServices(UserRepository userdetails)
+    private final InstructorRepository InstructorDetails;
+    public UserServices(UserRepository userdetails, InstructorRepository instructorDetails)
     {
         this.userdetails = userdetails;
+        this.InstructorDetails = instructorDetails;
     }
+
+
 
     public CreateUserDTO CreateUser(String email , String name)
     {
@@ -47,12 +53,30 @@ public class UserServices {
 
     }
 
+    public Instructor CreateInstructor(String email, String name, String specialization, String Sal) {
+
+        Instructor Instructor = new Instructor();
+        Instructor.setEmail(email);
+        Instructor.setName(name);
+        Instructor.setSalary(Sal);
+        Instructor.setSpecialization(specialization);
+
+
+        InstructorDetails.save(Instructor);
+
+
+
+        return Instructor;
+
+
+    }
+
     public  List<User>  getUser(String email)
     {
 
 
         System.out.println("email:"+email);
-        List<User> userlist = userdetails.findByEmail(email);
+       List<User> userlist = userdetails.findByEmail(email);
 
         for (User user : userlist) {
             System.out.println("User ID: " + user.getId());

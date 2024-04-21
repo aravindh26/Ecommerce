@@ -2,6 +2,7 @@ package com.spring.Ecommerce.Controllers;
 
 import com.spring.Ecommerce.DTO.CreateUserDTO;
 import com.spring.Ecommerce.DTO.getUserDTO;
+import com.spring.Ecommerce.Model.Instructor;
 import com.spring.Ecommerce.Model.User;
 import com.spring.Ecommerce.Services.UserServices;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class UserController {
     }
 
 
-    @PostMapping
+   @PostMapping("/createuser")
     public CreateUserDTO CreateUser(@RequestBody CreateUserDTO CreateUser) {
         //Create User only if user is not available//
         List<User> isuseravailable = UserService.getUser(CreateUser.getEmail());
@@ -53,6 +54,14 @@ public class UserController {
     @GetMapping("/getuserdetails")
     public List<User> getuser(@RequestBody getUserDTO getuser) {
         return UserService.getUser(getuser.getEmail());
+    }
+
+    @PostMapping("/CreateInstructor")
+    public Instructor CreateInstructor(@RequestBody Instructor Input)
+    {
+        System.out.println(Input.getSpecialization());
+        System.out.println(Input.getSalary());
+                 return UserService.CreateInstructor(Input.getEmail(),Input.getName(),Input.getSpecialization(),Input.getSalary());
     }
 
 

@@ -12,8 +12,7 @@ import static java.awt.font.TransformAttribute.IDENTITY;
 
 @Getter
 @Setter
-@Entity(name = "Ecomm_User")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity
 
 public class User {
     @Id
