@@ -1,14 +1,16 @@
 package com.spring.Ecommerce.Controllers;
 
-import com.spring.Ecommerce.DTO.CreateUserDTO;
-import com.spring.Ecommerce.DTO.getUserDTO;
+import com.spring.Ecommerce.DTO.*;
+import com.spring.Ecommerce.Model.Batch;
 import com.spring.Ecommerce.Model.Instructor;
 import com.spring.Ecommerce.Model.User;
 import com.spring.Ecommerce.Services.UserServices;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -56,13 +58,14 @@ public class UserController {
         return UserService.getUser(getuser.getEmail());
     }
 
-    @PostMapping("/CreateInstructor")
-    public Instructor CreateInstructor(@RequestBody Instructor Input)
-    {
-        System.out.println(Input.getSpecialization());
-        System.out.println(Input.getSalary());
-                 return UserService.CreateInstructor(Input.getEmail(),Input.getName(),Input.getSpecialization(),Input.getSalary());
+    @PostMapping(value = "/CreateInstructor", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public InstructorDTO CreateInstructor(@RequestBody CreateInstructorDTO input) {
+        // Call the CreateInstructorWithBatch method from UserService
+        InstructorDTO instructorDTO = UserService.CreateInstructorWithBatch(input);
+        return instructorDTO;
     }
+
+
 
 
 }
